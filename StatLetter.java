@@ -27,7 +27,7 @@ public class StatLetter {
         readFileName = fileName;
     }
     
-    public void ReadFromFile(int i) throws FileNotFoundException, IOException{
+    public void readFromFile(int i) throws FileNotFoundException, IOException{
         //Create a instream to read from.
         BufferedReader reader = new BufferedReader(
             new InputStreamReader(
@@ -69,7 +69,7 @@ public class StatLetter {
         }
     }
     
-    public void PrintMap(){
+    public void printMap(){
         //Print the map and it's values.
         Iterator<Map.Entry<String, Integer>> entries = letters.entrySet().iterator();
         while (entries.hasNext()) {
