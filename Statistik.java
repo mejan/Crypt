@@ -32,7 +32,9 @@ public class Statistik {
         //new object of class StatLetter, par is file name/location.
         StatLetter test= new StatLetter("/home/mejan/Documents/skola/VT-15/Kryptografi/Assignment/a1/svenskaAlpha/bibeln.txt");
         //read file.
-        test.ReadFromFile(i);
+        test.readFromFile(i);
+        //test printing
+        test.printMap();
         
     }
 }
