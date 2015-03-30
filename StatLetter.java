@@ -5,12 +5,15 @@
  */
 package statistik;
 
-import static com.sun.org.apache.xml.internal.security.keys.keyresolver.KeyResolver.iterator;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import static java.lang.Character.isLetter;
 import java.nio.charset.Charset;
 import java.util.Collections;
@@ -21,7 +24,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  *
@@ -106,7 +108,36 @@ public class StatLetter {
     
     //Will be change from void.
     public void printInFileLetterUseage(){
+        Writer writer = null;
+        Iterator<Map.Entry<String, Integer>> toString = letters.entrySet().iterator();
+        String tmp = "";
         
+        while(toString.hasNext()){
+            Map.Entry<String, Integer> entry = toString.next();
+            tmp += entry.getKey() + " ";
+            double tmpProc = round((double) entry.getValue()/total, 3);
+            tmp += " Har i decimalform: ";
+            tmp += tmpProc + " Procent.\n";
+        }
+        
+        try{
+            writer = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream("/home/mejan/Documents/skola/VT-15/Kryptografi/Assignment/a1/svenskaAlpha/Result.txt"), "utf-8"));
+                writer.write(tmp);
+        } catch (IOException ex){
+            System.out.println(ex.toString());
+        } finally{
+            try {writer.close();} catch (Exception ex){}
+        }
+    }
+    
+    //Round of a number.
+    private double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
     }
     //Store letters in map.
     private Map letters;

@@ -36,5 +36,7 @@ public class Statistik {
         //test printing
         test.printMap();
         
+        test.printInFileLetterUseage();
+        
     }
 }
