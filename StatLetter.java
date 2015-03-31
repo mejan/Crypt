@@ -30,17 +30,16 @@ import java.util.Map;
  * @author mejan
  */
 public class StatLetter {
-    public StatLetter(String fileName){
+    public StatLetter(){
         letters = new HashMap<String, Integer>();
         total=0;
-        readFileName = fileName;
     }
     
-    public void readFromFile(int i) throws FileNotFoundException, IOException{
+    public void readFromFile(int i, String fileName) throws FileNotFoundException, IOException{
         //Create a instream to read from.
         BufferedReader reader = new BufferedReader(
             new InputStreamReader(
-                new FileInputStream(readFileName),
+                new FileInputStream(fileName),
                     Charset.forName("UTF-8")));
         //Read in to c.
         int c;
@@ -107,7 +106,7 @@ public class StatLetter {
     }
     
     //Will be change from void.
-    public void printInFileLetterUseage(){
+    public void printInFileLetterUseage(String fileName){
         Writer writer = null;
         Iterator<Map.Entry<String, Integer>> toString = letters.entrySet().iterator();
         String tmp = "";
@@ -122,7 +121,7 @@ public class StatLetter {
         
         try{
             writer = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream("/home/mejan/Documents/skola/VT-15/Kryptografi/Assignment/a1/svenskaAlpha/Result.txt"), "utf-8"));
+                new FileOutputStream(fileName), "utf-8"));
                 writer.write(tmp);
         } catch (IOException ex){
             System.out.println(ex.toString());
@@ -133,7 +132,6 @@ public class StatLetter {
     
     //Round of a number.
     private double round(double value, int places) {
-        if (places < 0) throw new IllegalArgumentException();
         long factor = (long) Math.pow(10, places);
         value = value * factor;
         long tmp = Math.round(value);
@@ -143,6 +141,4 @@ public class StatLetter {
     private Map letters;
     //total nummber of read elements.
     private int total;
-    //read from file
-    String readFileName;
 }

@@ -30,13 +30,13 @@ public class Statistik {
         int i = 0;
         i = input.nextInt();
         //new object of class StatLetter, par is file name/location.
-        StatLetter test= new StatLetter("/home/mejan/Documents/skola/VT-15/Kryptografi/Assignment/a1/svenskaAlpha/bibeln.txt");
+        StatLetter test= new StatLetter();
         //read file.
-        test.readFromFile(i);
+        test.readFromFile(i, "/home/mejan/Documents/skola/VT-15/Kryptografi/Assignment/a1/svenskaAlpha/bibeln.txt");
         //test printing
         test.printMap();
         
-        test.printInFileLetterUseage();
+        test.printInFileLetterUseage("/home/mejan/Documents/skola/VT-15/Kryptografi/Assignment/a1/svenskaAlpha/result.txt");
         
     }
 }
