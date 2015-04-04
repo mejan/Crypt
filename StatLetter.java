@@ -115,7 +115,7 @@ public class StatLetter {
         while(toString.hasNext()){
             Map.Entry<String, Integer> entry = toString.next();
             tmp += entry.getKey() + " ";
-            double tmpProc = round((double) entry.getValue()/total, 3);
+            double tmpProc = round((double) entry.getValue()/total*100, 4);
             tmp += " Har i decimalform: ";
             tmp += tmpProc + " Procent.\n";
         }
