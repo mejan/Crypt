@@ -46,7 +46,7 @@ public class StatLetter {
         int c;
         
         String toMap ="";
-        Map test = new HashMap<String, Integer>();
+        Map tmpMap = new HashMap<String, Integer>();
         //Check so that we are not trying to get NULL key to the map.
         if(i != 0){
             //reading text.
@@ -61,11 +61,11 @@ public class StatLetter {
                     //To see when we should do a map out of it.
                     if(i == toMap.length()){
                         //if we allready have a key with just change the value otherwise make new map node.
-                        if(!test.containsKey(toMap)){
+                        if(!tmpMap.containsKey(toMap)){
                             int newest = 1;
-                            test.put(toMap, newest);
+                            tmpMap.put(toMap, newest);
                         } else{
-                            test.put(toMap, test.get(toMap).hashCode() +1);
+                            tmpMap.put(toMap, tmpMap.get(toMap).hashCode() +1);
                         }
                         //Reset the string when it been used.
                         toMap = "";
@@ -74,7 +74,7 @@ public class StatLetter {
                     total++;
                 }
             }
-            letters = sortByValues((HashMap) test);
+            letters = sortByValues((HashMap) tmpMap);
         } else{
             System.out.println("It's is not possible to have a map with nothing as key.");
         }
@@ -106,7 +106,7 @@ public class StatLetter {
         return sortedHashMap;
     }
     
-    //Will be change from void.
+    //Print to file.
     public void printInFileLetterUseage(String fileName){
         Writer writer = null;
         Iterator<Map.Entry<String, Integer>> toString = letters.entrySet().iterator();

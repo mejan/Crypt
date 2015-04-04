@@ -24,8 +24,7 @@ public class Statistik {
         //Change default language to swedish.
         Locale.setDefault(new Locale("sv"));
         
-        //Read user input 1 for 1 char, 2 for Diagram och 3 for triagram.
-        Scanner input = new Scanner(System.in);
+        
         int i = 1;
         //new object of class StatLetter, par is file name/location.
         StatLetter test= new StatLetter();
@@ -43,6 +42,10 @@ public class Statistik {
         test.readFromFile(i, "/home/mejan/Documents/skola/VT-15/Kryptografi/Assignment/a1/svenskaAlpha/bibeln.txt");
         //Create file for threagram.
         test.printInFileLetterUseage("/home/mejan/Documents/skola/VT-15/Kryptografi/Assignment/a1/svenskaAlpha/resultTregram.txt");
+        
+        RandomTextPrint  tmp = new RandomTextPrint();
+        
+        tmp.readFromFile("/home/mejan/Documents/skola/VT-15/Kryptografi/Assignment/a1/svenskaAlpha/bibeln.txt");
         
     }
 }
