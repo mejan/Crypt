@@ -25,18 +25,24 @@ public class Statistik {
         Locale.setDefault(new Locale("sv"));
         
         //Read user input 1 for 1 char, 2 for Diagram och 3 for triagram.
-        System.out.println("var god och fyll i moduls värdet.");
         Scanner input = new Scanner(System.in);
-        int i = 0;
-        i = input.nextInt();
+        int i = 1;
         //new object of class StatLetter, par is file name/location.
         StatLetter test= new StatLetter();
-        //read file.
+        //read file, for 1 letter.
         test.readFromFile(i, "/home/mejan/Documents/skola/VT-15/Kryptografi/Assignment/a1/svenskaAlpha/bibeln.txt");
-        //test printing
-        test.printMap();
-        
-        test.printInFileLetterUseage("/home/mejan/Documents/skola/VT-15/Kryptografi/Assignment/a1/svenskaAlpha/result.txt");
+        //print result of one letter.
+        test.printInFileLetterUseage("/home/mejan/Documents/skola/VT-15/Kryptografi/Assignment/a1/svenskaAlpha/resultOneLetter.txt");
+        i = 2;
+        //Read file, for diagram.
+        test.readFromFile(i, "/home/mejan/Documents/skola/VT-15/Kryptografi/Assignment/a1/svenskaAlpha/bibeln.txt");
+        //Createfile for diagram.
+        test.printInFileLetterUseage("/home/mejan/Documents/skola/VT-15/Kryptografi/Assignment/a1/svenskaAlpha/resultDiagram.txt");
+        //read file, for treagram.
+        i = 3;
+        test.readFromFile(i, "/home/mejan/Documents/skola/VT-15/Kryptografi/Assignment/a1/svenskaAlpha/bibeln.txt");
+        //Create file for threagram.
+        test.printInFileLetterUseage("/home/mejan/Documents/skola/VT-15/Kryptografi/Assignment/a1/svenskaAlpha/resultTregram.txt");
         
     }
 }

@@ -36,6 +36,7 @@ public class StatLetter {
     }
     
     public void readFromFile(int i, String fileName) throws FileNotFoundException, IOException{
+        letters.clear();
         //Create a instream to read from.
         BufferedReader reader = new BufferedReader(
             new InputStreamReader(
