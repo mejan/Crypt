@@ -27,16 +27,17 @@ import java.util.Map;
  */
 public class RandomTextPrint {
     //constructor
-    public RandomTextPrint(){
+    public RandomTextPrint(String filePath) throws IOException{
         letters = new HashMap<Character, Double>();
         diagram = new HashMap<String, Double>();
         tregram = new HashMap<String, Double>();
         totalL = 0;
         totalD = 0;
         totalT = 0;
+        readFromFile(filePath);
     }
     //Read from file and put in Maps.
-    public void readFromFile(String filePath) throws FileNotFoundException, IOException{
+    private void readFromFile(String filePath) throws FileNotFoundException, IOException{
         //Create reader
         BufferedReader reader = new BufferedReader(
             new InputStreamReader(
@@ -65,7 +66,9 @@ public class RandomTextPrint {
                     tmpLet.put(tmpChar, tmp);
                     totalL += 1;
                 } else{
-                    tmpLet.put(tmpChar, tmpLet.get(tmpChar).hashCode() +1);
+                    Double tmp = (Double) tmpLet.get(tmpChar);
+                    tmp += 1.0;
+                    tmpLet.put(tmpChar, tmp);
                     totalL += 1;
                 }
                 //add char to string.
@@ -77,7 +80,9 @@ public class RandomTextPrint {
                         tmpDia.put(toDia, tmp);
                         totalD += 1;
                     } else{
-                        tmpDia.put(toDia, tmpDia.get(toDia).hashCode()+1);
+                        Double tmp = (Double) tmpDia.get(toDia);
+                        tmp += 1.0;
+                        tmpDia.put(toDia, tmp);
                         totalD += 1;
                     }
                     //clear String.
@@ -92,7 +97,9 @@ public class RandomTextPrint {
                         tmpTre.put(toTre, tmp);
                         totalT += 1;
                     } else{
-                        tmpTre.put(toTre, tmpTre.get(toTre).hashCode()+1);
+                        Double tmp = (Double) tmpTre.get(toTre);
+                        tmp += 1.0;
+                        tmpTre.put(toTre, tmp);
                         totalT += 1;
                     }
                     //Clear String.
@@ -103,9 +110,6 @@ public class RandomTextPrint {
         letters = sortByValues((HashMap) tmpLet);
         diagram = sortByValues((HashMap) tmpDia);
         tregram = sortByValues((HashMap) tmpTre);
-        //printMap(letters, 1);
-        //printMap(diagram, 0);
-        //printMap(tregram, 0);
     }
     
     //Round of a number.
@@ -134,21 +138,79 @@ public class RandomTextPrint {
         return sortedHashMap;
     }
     
+    public void makeValueInProcent(){
+        makeLettersProcent();
+        makeDiagramProcent();
+        makeTregramProcent();
+    }
+    
+    //Make to procent as value in letters.
+    private void makeLettersProcent(){
+        Iterator<Map.Entry<Character, Double>> entries = letters.entrySet().iterator();
+        while (entries.hasNext()){
+            Map.Entry<Character, Double> entry = entries.next();
+            Double tmp = (Double) letters.get(entry.getKey());
+            tmp /= totalL;
+            tmp *= 100;
+            letters.put(entry.getKey(), tmp);
+        }
+    }
+    
+    //Diagram value to procent value.
+    private void makeDiagramProcent(){
+        Iterator<Map.Entry<String, Double>> entries = diagram.entrySet().iterator();
+        while (entries.hasNext()){
+            Map.Entry<String, Double> entry = entries.next();
+            Double tmp = (Double) diagram.get(entry.getKey());
+            tmp /= totalD;
+            tmp *= 100;
+            diagram.put(entry.getKey(), tmp);
+        }
+    }
+    
+    //Tregram value to procent value.
+    private void makeTregramProcent(){
+        Iterator<Map.Entry<String, Double>> entries = tregram.entrySet().iterator();
+        while (entries.hasNext()){
+            Map.Entry<String, Double> entry = entries.next();
+            Double tmp = (Double) tregram.get(entry.getKey());
+            tmp /= totalT;
+            tmp *= 100;
+            tregram.put(entry.getKey(), tmp);
+        }
+    }
+    
+    public void printAllMaps(){
+        printMap(0);
+        System.out.println(" ");
+        printMap(1);
+        System.out.println(" ");
+        printMap(2);
+    }
+    
     //Print Map
-    public void printMap(Map toPrint, int i){
+    public void printMap(int i){
         //Print the map and it's values.
-        if(i == 0){
-            Iterator<Map.Entry<String, Double>> entries = toPrint.entrySet().iterator();
+        if(i == 2){
+            Iterator<Map.Entry<String, Double>> entries = tregram.entrySet().iterator();
             while (entries.hasNext()) {
                 Map.Entry<String, Double> entry = entries.next();
                 System.out.println("Key = " + entry.getKey() + " Value = " + entry.getValue());
             }
-        } else if (i == 1){
-            Iterator<Map.Entry<Character, Double>> entries = toPrint.entrySet().iterator();
+        } else if (i == 0){
+            Iterator<Map.Entry<Character, Double>> entries = letters.entrySet().iterator();
             while (entries.hasNext()){
                 Map.Entry<Character, Double> entry = entries.next();
                 System.out.println("Key = " + entry.getKey() + " Value = " + entry.getValue());
             }
+        } else if (i == 1){
+            Iterator<Map.Entry<String, Double>> entries = diagram.entrySet().iterator();
+            while (entries.hasNext()) {
+                Map.Entry<String, Double> entry = entries.next();
+                System.out.println("Key = " + entry.getKey() + " Value = " + entry.getValue());
+            }
+        } else{
+            System.out.println("There is only maps 0, 1 or 2");
         }
     }
     
