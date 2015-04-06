@@ -43,8 +43,8 @@ public class Statistik {
         //Create file for threagram.
         test.printInFileLetterUseage("/home/mejan/Documents/skola/VT-15/Kryptografi/Assignment/a1/svenskaAlpha/resultTregram.txt");
         
-        //try{
+        
         RandomTextPrint  tmp = new RandomTextPrint("/home/mejan/Documents/skola/VT-15/Kryptografi/Assignment/a1/svenskaAlpha/bibeln.txt");
-        tmp.makeValueInProcent();
+        tmp.printRandomTextToFile("/home/mejan/Documents/skola/VT-15/Kryptografi/Assignment/a1/svenskaAlpha/randomText.txt");
     }
 }

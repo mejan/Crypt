@@ -6,12 +6,17 @@
 package statistik;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import static java.lang.Character.isLetter;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -20,6 +25,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  *
@@ -29,12 +35,11 @@ public class RandomTextPrint {
     //constructor
     public RandomTextPrint(String filePath) throws IOException{
         letters = new HashMap<Character, Double>();
-        diagram = new HashMap<String, Double>();
-        tregram = new HashMap<String, Double>();
         totalL = 0;
-        totalD = 0;
-        totalT = 0;
+        randomGenerator = new Random();
+        toFile = "";
         readFromFile(filePath);
+        fillString();
     }
     //Read from file and put in Maps.
     private void readFromFile(String filePath) throws FileNotFoundException, IOException{
@@ -71,53 +76,21 @@ public class RandomTextPrint {
                     tmpLet.put(tmpChar, tmp);
                     totalL += 1;
                 }
-                //add char to string.
-                toDia += tmpChar;
-                //Check so it is the right length.
-                if(toDia.length() == 2){
-                    if(!tmpDia.containsKey(toDia)){
-                        double tmp = 1;
-                        tmpDia.put(toDia, tmp);
-                        totalD += 1;
-                    } else{
-                        Double tmp = (Double) tmpDia.get(toDia);
-                        tmp += 1.0;
-                        tmpDia.put(toDia, tmp);
-                        totalD += 1;
-                    }
-                    //clear String.
-                    toDia = "";
-                }
-                //Add har to String
-                toTre += tmpChar;
-                //Check so it is the right length.
-                if(toTre.length() == 3){
-                    if(!tmpTre.containsKey(toTre)){
-                        double tmp = 1;
-                        tmpTre.put(toTre, tmp);
-                        totalT += 1;
-                    } else{
-                        Double tmp = (Double) tmpTre.get(toTre);
-                        tmp += 1.0;
-                        tmpTre.put(toTre, tmp);
-                        totalT += 1;
-                    }
-                    //Clear String.
-                    toTre = "";
-                }
             }
         }
         letters = sortByValues((HashMap) tmpLet);
-        diagram = sortByValues((HashMap) tmpDia);
-        tregram = sortByValues((HashMap) tmpTre);
+        changeValue();
     }
     
-    //Round of a number.
-    private double round(double value, int places) {
-        long factor = (long) Math.pow(10, places);
-        value = value * factor;
-        long tmp = Math.round(value);
-        return (double) tmp / factor;
+    //Change Value
+    private void changeValue(){
+        Iterator<Map.Entry<Character, Double>> entries = letters.entrySet().iterator();
+        while (entries.hasNext()){
+            Map.Entry<Character, Double> entry = entries.next();
+            Double tmp = (Double) letters.get(entry.getKey());
+            tmp /= totalL;
+            letters.put(entry.getKey(), tmp);
+        }
     }
     
     //Sort HashMap by Value.
@@ -138,14 +111,8 @@ public class RandomTextPrint {
         return sortedHashMap;
     }
     
-    public void makeValueInProcent(){
-        makeLettersProcent();
-        makeDiagramProcent();
-        makeTregramProcent();
-    }
-    
     //Make to procent as value in letters.
-    private void makeLettersProcent(){
+    public void makeLettersProcent(){
         Iterator<Map.Entry<Character, Double>> entries = letters.entrySet().iterator();
         while (entries.hasNext()){
             Map.Entry<Character, Double> entry = entries.next();
@@ -156,68 +123,76 @@ public class RandomTextPrint {
         }
     }
     
-    //Diagram value to procent value.
-    private void makeDiagramProcent(){
-        Iterator<Map.Entry<String, Double>> entries = diagram.entrySet().iterator();
-        while (entries.hasNext()){
-            Map.Entry<String, Double> entry = entries.next();
-            Double tmp = (Double) diagram.get(entry.getKey());
-            tmp /= totalD;
-            tmp *= 100;
-            diagram.put(entry.getKey(), tmp);
-        }
-    }
-    
-    //Tregram value to procent value.
-    private void makeTregramProcent(){
-        Iterator<Map.Entry<String, Double>> entries = tregram.entrySet().iterator();
-        while (entries.hasNext()){
-            Map.Entry<String, Double> entry = entries.next();
-            Double tmp = (Double) tregram.get(entry.getKey());
-            tmp /= totalT;
-            tmp *= 100;
-            tregram.put(entry.getKey(), tmp);
-        }
-    }
-    
-    public void printAllMaps(){
-        printMap(0);
-        System.out.println(" ");
-        printMap(1);
-        System.out.println(" ");
-        printMap(2);
-    }
-    
     //Print Map
     public void printMap(int i){
-        //Print the map and it's values.
-        if(i == 2){
-            Iterator<Map.Entry<String, Double>> entries = tregram.entrySet().iterator();
-            while (entries.hasNext()) {
-                Map.Entry<String, Double> entry = entries.next();
-                System.out.println("Key = " + entry.getKey() + " Value = " + entry.getValue());
-            }
-        } else if (i == 0){
-            Iterator<Map.Entry<Character, Double>> entries = letters.entrySet().iterator();
-            while (entries.hasNext()){
-                Map.Entry<Character, Double> entry = entries.next();
-                System.out.println("Key = " + entry.getKey() + " Value = " + entry.getValue());
-            }
-        } else if (i == 1){
-            Iterator<Map.Entry<String, Double>> entries = diagram.entrySet().iterator();
-            while (entries.hasNext()) {
-                Map.Entry<String, Double> entry = entries.next();
-                System.out.println("Key = " + entry.getKey() + " Value = " + entry.getValue());
-            }
-        } else{
-            System.out.println("There is only maps 0, 1 or 2");
+        Iterator<Map.Entry<Character, Double>> entries = letters.entrySet().iterator();
+        while (entries.hasNext()){
+            Map.Entry<Character, Double> entry = entries.next();
+            System.out.println("Key = " + entry.getKey() + " Value = " + entry.getValue());
         }
     }
     
+    
+    //How many of a certin letter is needed.
+    private int rep(Double i){
+        int tmp = (int) (i*2000);
+        return  tmp;
+    }
+    
+    //scramble Strings
+    private String scramble(){
+      if (toFile == null)
+         return null;
+
+      char[] arr = toFile.toCharArray();
+      List<Character> charList = new ArrayList<Character>(arr.length);
+      for (final char c : arr) {
+         charList.add(c);
+      }
+        
+
+      Collections.shuffle(charList, randomGenerator);
+      char[] converted = new char[charList.size()];
+      for (int i = 0; i < charList.size(); i++) {
+         converted[i] = charList.get(i).charValue();
+      }
+
+      return new String(converted);
+   }
+    
+   private void fillString(){
+       Iterator<Map.Entry<Character, Double>> entries = letters.entrySet().iterator();
+       while (entries.hasNext()){
+           Map.Entry<Character, Double> entry = entries.next();
+           int max=rep(entry.getValue());
+           for(int i=0; i<max; i++){
+               toFile += entry.getKey();
+           }
+       }
+       toFile = scramble();
+   }
+   
+   //Write a page in txt
+   public void printRandomTextToFile(String fileName){
+        Writer writer = null;
+        try{
+            writer = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(fileName), "utf-8"));
+                writer.write(toFile);
+        } catch (IOException ex){
+            System.out.println(ex.toString());
+        } finally{
+            try {writer.close();} catch (Exception ex){}
+        }
+   }
+    
     private Map letters;
-    private Map diagram;
-    private Map tregram;
     private int totalL;
-    private int totalD;
-    private int totalT;
+    private String toFile;
+    private Random randomGenerator;
 }
+/*a = 9% gånger
+2000 chars = 1 sida
+0.09 * 2000 = antal gånger bokstaven a ska vara på 1 sida.
+Array.push( a ) antal gånger från ovan
+samma sak med alla bokstäver sen en shuffle sen printar jag allt*/

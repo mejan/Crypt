@@ -54,24 +54,39 @@ public class StatLetter {
                 //Convert to char in UpperCase
                 char tmp = (char) Character.toUpperCase(c);
                 //Check so the char is a letter
-                if (isLetter(tmp)){
-                    //Combine letters in a string.
-                    toMap += tmp;
+                if(i != 1){
+                    if (isLetter(tmp)){
+                        //Combine letters in a string.
+                        toMap += tmp;
 
-                    //To see when we should do a map out of it.
-                    if(i == toMap.length()){
-                        //if we allready have a key with just change the value otherwise make new map node.
-                        if(!tmpMap.containsKey(toMap)){
-                            int newest = 1;
-                            tmpMap.put(toMap, newest);
-                        } else{
-                            tmpMap.put(toMap, tmpMap.get(toMap).hashCode() +1);
+                        //To see when we should do a map out of it.
+                        if(i == toMap.length()){
+                            //if we allready have a key with just change the value otherwise make new map node.
+                            if(!tmpMap.containsKey(toMap)){
+                                int newest = 1;
+                                tmpMap.put(toMap, newest);
+                            } else{
+                                tmpMap.put(toMap, tmpMap.get(toMap).hashCode() +1);
+                            }
+                            //Reset the string when it been used.
+                            toMap = "";
                         }
-                        //Reset the string when it been used.
-                        toMap = "";
+                        //say the total of added values.
+                        total++;
                     }
-                    //say the total of added values.
-                    total++;
+                } else{
+                    if (isLetter(tmp) || tmp == ' '){
+                        //if we allready have a key with just change the value otherwise make new map node.
+                            if(!tmpMap.containsKey(toMap)){
+                                int newest = 1;
+                                tmpMap.put(toMap, newest);
+                            } else{
+                                tmpMap.put(toMap, tmpMap.get(toMap).hashCode() +1);
+                            }
+                            //Reset the string when it been used.
+                            toMap = "";
+                            total++;
+                    }
                 }
             }
             letters = sortByValues((HashMap) tmpMap);
