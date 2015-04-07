@@ -32,16 +32,6 @@ public class Statistik {
         test.readFromFile(i, "/home/mejan/Documents/skola/VT-15/Kryptografi/Assignment/a1/svenskaAlpha/bibeln.txt");
         //print result of one letter.
         test.printInFileLetterUseage("/home/mejan/Documents/skola/VT-15/Kryptografi/Assignment/a1/svenskaAlpha/resultOneLetter.txt");
-        i = 2;
-        //Read file, for diagram.
-        test.readFromFile(i, "/home/mejan/Documents/skola/VT-15/Kryptografi/Assignment/a1/svenskaAlpha/bibeln.txt");
-        //Createfile for diagram.
-        test.printInFileLetterUseage("/home/mejan/Documents/skola/VT-15/Kryptografi/Assignment/a1/svenskaAlpha/resultDiagram.txt");
-        //read file, for treagram.
-        i = 3;
-        test.readFromFile(i, "/home/mejan/Documents/skola/VT-15/Kryptografi/Assignment/a1/svenskaAlpha/bibeln.txt");
-        //Create file for threagram.
-        test.printInFileLetterUseage("/home/mejan/Documents/skola/VT-15/Kryptografi/Assignment/a1/svenskaAlpha/resultTregram.txt");
         
         
         RandomTextPrint  tmp = new RandomTextPrint("/home/mejan/Documents/skola/VT-15/Kryptografi/Assignment/a1/svenskaAlpha/bibeln.txt");

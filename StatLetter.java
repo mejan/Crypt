@@ -76,6 +76,7 @@ public class StatLetter {
                     }
                 } else{
                     if (isLetter(tmp) || tmp == ' '){
+                        toMap += tmp;
                         //if we allready have a key with just change the value otherwise make new map node.
                             if(!tmpMap.containsKey(toMap)){
                                 int newest = 1;
@@ -83,7 +84,6 @@ public class StatLetter {
                             } else{
                                 tmpMap.put(toMap, tmpMap.get(toMap).hashCode() +1);
                             }
-                            //Reset the string when it been used.
                             toMap = "";
                             total++;
                     }
@@ -153,6 +153,7 @@ public class StatLetter {
         long tmp = Math.round(value);
         return (double) tmp / factor;
     }
+    
     //Store letters in map.
     private Map letters;
     //total nummber of read elements.
