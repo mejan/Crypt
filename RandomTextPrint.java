@@ -58,8 +58,6 @@ public class RandomTextPrint {
         
         //Make tmp maps for easyer sort.
         Map tmpLet = new HashMap<Character, Double>();
-        Map tmpDia = new HashMap<String, Double>();
-        Map tmpTre = new HashMap<String, Double>();
         //Read the reader loop
         while((c = reader.read()) != -1) {
             //convert int to char.
